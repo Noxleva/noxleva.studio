@@ -3,23 +3,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Page</title>
+    <title>Noxleva Studios</title>
+    <!-- Google Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">    
+    <!-- ADDED: Font Awesome Icon Kit -->
+    <script src="https://kit.fontawesome.com/49b9791ca8.js" crossorigin="anonymous"></script>
+
     <style>
-        body {
-            font-family: sans-serif;
-            display: grid;
-            place-items: center;
-            min-height: 100vh;
-            background-color: #111;
-            color: #eee;
+        /* Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; 
+            color: #e5e7eb; /* gray-200 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem; /* p-8 */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Theme transition */
+        }
+
+        .container {
+            max-width: 28rem; /* max-w-md */
+            width: 100%;
+            text-align: center;
+            /* space-y-8 */
+            position: relative; /* Added for toggle button positioning */
+        }
+
+        .container {
+            max-width: 28rem; /* max-w-md */
+            width: 100%;
+            text-align: center;
+            /* space-y-8 */
+        }
+        .container > * + * {
+            margin-top: 2rem;
+        }
+
+        /* Theme Toggle Button */
+        #theme-toggle {
+            position: absolute;
+            top: -1rem;
+            right: 0;
+            background: none;
+            border: none;
+            color: #d1d5db; /* gray-300 */
+            font-size: 1.25rem; /* text-xl */
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        #theme-toggle:hover {
+            color: #085ACD; /* Brand Blue */
+        }
+
+        #theme-toggle .fa-sun {
+            display: none; /* Hidden by default */
+        }
+
+        /* Logo Section */
+        .logo-section img {
+            width: 18rem; 
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 1.5rem; /* mb-6 */
+            transition: opacity 0.3s ease;
+        }
+        .logo-section img:hover {
+            opacity: 0.9;
+        }
+        .logo-section .title {
+            font-size: 1.5rem; /* text-2xl */
+            line-height: 2rem;
+            font-weight: 700;
+            color: #ffffff; /* text-white */
+        }
+        .logo-section .tagline {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.75rem;
+            color: #ffffff; 
+            margin-top: 0.5rem; /* mt-2 */
+            transition: color 0.3s ease;
+        }
+
+        .bio-section {
+            margin-top: 2rem; /* Consistent spacing */
+            color: #a1a1aa; 
+            line-height: 1.6; /* More readable spacing */
+            transition: color 0.3s ease;
+        }
+
+        /* NEW: bio-intro class */
+        .bio-section .bio-intro {
+            font-weight: 600; 
+            margin-bottom: 1.5rem; 
+            text-align: left;
+        }
+
+        .bio-section .bio-main {
+            text-align: justify;
+        }
+
+        .bio-section .bio-outro {
+            text-align: right;
+            margin-top: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Links Section */
+        .links-section {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            /* space-y-4 */
+        }
+        .links-section > * + * {
+            margin-top: 1rem;
+        }
+
+        .links-section a {
+            background-color: #1f2937; /* bg-gray-800 */
+            color: #ffffff; /* text-white */
+            font-weight: 600; /* font-semibold */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-lg */
+        }
+        .links-section a:hover {
+            background-color: #085ACD; /* Noxleva Brand Blue */
+            color: #ffffff; /* Ensure text is white on blue hover */
+            transform: translateY(-2px);
+        }
+
+        .links-section a i {
+            width: 1.5rem; /* w-6 */
+            font-size: 1.25rem; /* text-xl */
+            line-height: 1.75rem;
+            margin-right: 0.75rem; /* space-x-3 */
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            border-top: 1px solid #1f2937; /* border-gray-800 */
+            padding-top: 1.5rem; /* pt-6 */
+            width: 100%;
+            margin-top: 2rem;
+            transition: border-color 0.3s ease;
+        }
+        footer p {
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.25rem;
+            color: #6b7281; 
+            transition: color 0.3s ease;
+        }
+
+        /* ------------------------- */
+        /* --- LIGHT MODE STYLES --- */
+        /* ------------------------- */
+
+        body.light-mode {
+            background-color: #ffffff;
+            color: #1f2937; /* Dark gray text */
+        }
+
+        /* Toggle Button Light Mode */
+        .light-mode #theme-toggle {
+            color: #1f2937; /* Dark icon */
+        }
+        .light-mode #theme-toggle .fa-sun {
+            display: inline-block; /* Show sun */
+        }
+        .light-mode #theme-toggle .fa-moon {
+            display: none; /* Hide moon */
+        }
+        
+        /* Logo & Bio Light Mode */
+        .light-mode .logo-section .tagline {
+            color: #1f2937; /* Dark gray */
+        }
+        .light-mode .bio-section {
+            color: #4b5563; 
+        }
+
+        /* Links Light Mode */
+        .light-mode .links-section a {
+            background-color: #f3f4f6; /* Very light gray */
+            color: #1f2937; /* Dark text */
+        }
+        .light-mode .links-section a:hover {
+            background-color: #085ACD; /* Brand Blue (same) */
+            color: #ffffff; /* White text (same) */
+        }
+
+        /* Footer Light Mode */
+        .light-mode footer {
+            border-top-color: #e5e7eb; /* Light gray border */
+        }
+        .light-mode footer p {
+            color: #6b7281; /* Medium gray */
+        }
+
     </style>
 </head>
 <body>
-    <div>
-        <h1>Hello, this is a test.</h1>
-        <p>Noxleva Studios will be here soon...</p>
+
+    <div class="container">
+
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle" title="Toggle theme">
+            <i class="fa-solid fa-moon"></i>
+            <i class="fa-solid fa-sun"></i>
+        </button>
+
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <!-- UPDATED: Added ID and changed src to the dark-mode logo name -->
+            <img id="logo-image" src="NoxlevaLogoWebDark.png" alt="Noxleva Studios Logo">
+            <p class="tagline">"where bright ideas rise from darkness"</p>
+        </div>
+        <!-- Bio Section -->
+        <div class="bio-section">
+          <p class="bio-intro">This is Noxleva.</p>
+          <p class="bio-main">A game design journey started with 'A Theory of Fun' and evolved into a 2 years love &amp; hate relationship with Unreal Engine. Now, I'm inviting you to be a part of the next chapter: growing the "Noxleva" into a full-fledged studio, "Noxleva Studios", and sharing the entire process, from prototyping to launch.</p>
+          <p class="bio-outro">Welcome to the journey.</p>
+        </div>
+        <!-- Social Links Section -->
+        <div class="links-section">
+
+            <!-- Ko-fi Link -->
+            <a href="https://ko-fi.com/noxleva" target="_blank" rel="noopener noreferrer" class="link-kofi">
+                <!-- UPDATED: Replaced broken ko-fi icon with user's mug icon -->
+                <i class="fa-solid fa-mug-hot"></i>
+                <span>Support on Ko-fi</span>
+            </a>
+
+            <!-- X (Twitter) Link -->
+            <a href="https://x.com/noxlevastudios" target="_blank" rel="noopener noreferrer" class="link-x">
+                <i class="fa-brands fa-x-twitter"></i>
+                <span>Follow on X</span>
+            </a>
+
+            <!-- Instagram Link -->
+            <a href="https://instagram.com/noxlevastudios" target="_blank" rel="noopener noreferrer" class="link-ig">
+                <i class="fa-brands fa-instagram"></i>
+                <span>Follow on Instagram</span>
+            </a>
+
+            <!-- Reddit Link -->
+            <a href="https://www.reddit.com/user/noxlevastudios" target="_blank" rel="noopener noreferrer" class="link-reddit">
+                <i class="fa-brands fa-reddit-alien"></i>
+                <span>Follow on Reddit</span>
+            </a>
+
+            <!-- Email Link -->
+            <a href="mailto:hello@noxleva.studio" class="link-mail">
+                <i class="fa-solid fa-envelope"></i>
+                <span>hello@noxleva.studio</span>
+            </a>
+            
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 Noxleva Studios. All rights reserved.</p>
+        </footer>
+
     </div>
+
+    <!-- NEW: JavaScript for Theme Toggling -->
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const logoImage = document.getElementById('logo-image');
+        
+        const logoDark = 'NoxlevaLogoWebDark.png'; // Your dark-mode logo (white text)
+        const logoLight = 'NoxlevaLogoWebLight.png'; // Your light-mode logo (black text)
+        // -----------------
+
+        function setTheme(theme) {
+            if (theme === 'light') {
+                body.classList.add('light-mode');
+                logoImage.src = logoLight;
+            } else {
+                body.classList.remove('light-mode');
+                logoImage.src = logoDark;
+            }
+            // Save the user's preference
+            localStorage.setItem('theme', theme);
+        }
+
+        // 1. On Click: Toggle the theme
+        themeToggle.addEventListener('click', () => {
+            const isLight = body.classList.contains('light-mode');
+            setTheme(isLight ? 'dark' : 'light');
+        });
+
+        // 2. On Load: Check for saved theme in localStorage
+        const savedTheme = localStorage.getItem('theme') || 'dark'; // Default to 'dark'
+        setTheme(savedTheme);
+    </script>
+
 </body>
 </html>
-
