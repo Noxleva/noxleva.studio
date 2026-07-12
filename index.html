@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000">
-    
+
     <title>Noxleva Studios | where bright ideas rise from darkness</title>
     <meta name="description" content="Noxleva Studios is a solo indie game dev studio where bright ideas rise from darkness">
     <link rel="canonical" href="https://noxleva.studio/" />
@@ -26,6 +26,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/49b9791ca8.js" crossorigin="anonymous"></script>
 
+    <!-- Set theme before first paint to avoid a flash of the wrong theme -->
+    <script>
+        (function () {
+            try {
+                // Dark by default on first visit; only an explicit saved choice switches to light.
+                if (localStorage.getItem('theme') === 'light') {
+                    document.documentElement.classList.add('light-mode');
+                }
+            } catch (e) { /* storage blocked; default dark */ }
+        })();
+    </script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -36,6 +48,7 @@
       "description": "Noxleva Studios is a solo indie game dev studio where bright ideas rise from darkness",
       "sameAs": [
         "https://www.reddit.com/user/noxlevastudios",
+        "https://www.youtube.com/@noxlevastudios",
         "https://x.com/noxlevastudios",
         "https://instagram.com/noxlevastudios",
         "https://www.threads.com/@noxlevastudios",
@@ -73,13 +86,19 @@ body {
 .layout {
     width: 100%;
     max-width: 40rem;
-    position: relative; 
+    position: relative;
     padding: 2rem clamp(1rem, 5vw, 2rem);
     display: flex;
     flex-direction: column;
 }
 
-@media (min-width: 1100px) {
+/* 640–1079px: let the single column breathe instead of staying locked at 40rem */
+@media (min-width: 640px) and (max-width: 1079px) {
+    .layout { max-width: 46rem; }
+}
+
+/* 1080px+: two-column grid (lowered from 1100 so iPad-class landscape tablets get it) */
+@media (min-width: 1080px) {
     .layout {
         max-width: 1300px;
         display: grid;
@@ -91,7 +110,7 @@ body {
         position: absolute;
         left: 40%;
         top: 0;
-        bottom: 0; 
+        bottom: 0;
         width: 1px;
         background: linear-gradient(to bottom, transparent 0%, rgba(8, 90, 205, 0.2) 7%, #085ACD 20%, #085ACD 80%, rgba(8, 90, 205, 0.2) 93%, transparent 100%);
         opacity: 0.9;
@@ -110,92 +129,107 @@ body {
 .left-panel { text-align: center; }
 
 /* ================= THEME TOGGLE ================= */
+/* Absolute by default: scrolls with the page on phones instead of hovering over content */
 #theme-toggle {
-    position: fixed;
-    top: 2rem;
-    right: 2rem;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
     background: none;
     border: none;
     font-size: 1.25rem;
     color: #d1d5db;
     cursor: pointer;
     z-index: 1000;
+    line-height: 1;
+}
+
+/* Pinned to the corner on desktop where there's no scroll */
+@media (min-width: 1080px) {
+    #theme-toggle { position: fixed; top: 2rem; right: 2rem; }
 }
 
 #theme-toggle i { display: none; }
 
-body:not(.light-mode) #theme-toggle .fa-sun.fa-regular { display: inline-block; }
-body:not(.light-mode) #theme-toggle:hover .fa-sun.fa-regular { display: none; }
-body:not(.light-mode) #theme-toggle:hover .fa-sun.fa-solid { display: inline-block; color: #fff; }
+html:not(.light-mode) #theme-toggle .fa-sun.fa-regular { display: inline-block; }
+html:not(.light-mode) #theme-toggle:hover .fa-sun.fa-regular { display: none; }
+html:not(.light-mode) #theme-toggle:hover .fa-sun.fa-solid { display: inline-block; color: #fff; }
 
-body.light-mode #theme-toggle .fa-moon.fa-regular { display: inline-block; }
-body.light-mode #theme-toggle:hover .fa-moon.fa-regular { display: none; }
-body.light-mode #theme-toggle:hover .fa-moon.fa-solid { display: inline-block; color: #000; }
-body.light-mode #theme-toggle { color: #1f2937; }
+html.light-mode #theme-toggle .fa-moon.fa-regular { display: inline-block; }
+html.light-mode #theme-toggle:hover .fa-moon.fa-regular { display: none; }
+html.light-mode #theme-toggle:hover .fa-moon.fa-solid { display: inline-block; color: #000; }
+html.light-mode #theme-toggle { color: #1f2937; }
 
 /* ================= CONTENT ================= */
-.logo-section img { 
-    width: 18rem; 
-    margin-bottom: 1.25rem; 
-    transition: opacity 0.3s ease; 
+.logo-section img {
+    width: 18rem;
+    margin-bottom: 1.25rem;
+    transition: opacity 0.3s ease;
 }
 
-.tagline { 
-    font-size: 1.125rem; 
-    color: #ffffff; 
-    text-align: center; 
+.tagline {
+    font-size: 1.125rem;
+    color: #ffffff;
+    text-align: center;
 }
 
-.bio-section { color: #a1a1aa; line-height: 1.7; width: 100%; max-width: 36rem; }
+.bio-section { color: #9ca3af; line-height: 1.7; width: 100%; max-width: 36rem; }
 .bio-intro { font-weight: 600; text-align: left; margin-bottom: 1.5rem; }
-.bio-main p { text-align: justify; margin-bottom: 0.75rem; }
-.bio-main p:last-child { text-align: justify; margin-bottom: 0; }
+.bio-main p { text-align: justify; hyphens: auto; margin-bottom: 0.75rem; }
+.bio-main p:last-child { margin-bottom: 0; }
 .bio-outro { margin-top: 1.5rem; text-align: right; font-weight: 600; }
 
-.links-section { 
-    margin-top: 2.5rem; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 0.75rem; 
-    width: 100%; 
-    max-width: 28rem; 
+.links-section {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 24rem;
 }
 
 .links-section a {
     background-color: #1f2937;
     color: #ffffff;
     font-weight: 600;
-    padding: 0.6rem 1.5rem; 
+    padding: 0.6rem 1.5rem;
     border-radius: 0.5rem;
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.links-section a:hover { 
-    background-color: #085ACD !important; 
-    color: #ffffff !important; 
+.links-section a:hover {
+    background-color: #085ACD !important;
+    color: #ffffff !important;
 }
 
-.links-section i { margin-right: 0.75rem; font-size: 1.25rem; }
+/* Fixed-width icon slot so icons + labels line up in a clean left column */
+.links-section i {
+    width: 1.5rem;
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    text-align: center;
+    flex-shrink: 0;
+}
 
-footer { margin-top: 3rem; font-size: 0.875rem; color: #6b7281; text-align: center; }
+footer { margin-top: 3rem; font-size: 0.875rem; color: #8b8b95; text-align: center; }
 
 /* ================= LIGHT MODE ================= */
-body.light-mode { background-color: #ffffff; color: #1f2937; }
-body.light-mode .tagline { color: #000000; }
-body.light-mode .bio-section { color: #4b5563; }
-body.light-mode .links-section a { background-color: #e5e7eb; color: #1f2937; }
+html.light-mode body { background-color: #ffffff; color: #1f2937; }
+html.light-mode .tagline { color: #000000; }
+html.light-mode .bio-section { color: #4b5563; }
+html.light-mode footer { color: #6b7280; }
+html.light-mode .links-section a { background-color: #e5e7eb; color: #1f2937; }
 
 /* ================= MOBILE TWEAKS ================= */
 @media (max-width: 600px) {
-    .left-panel { 
-        padding-bottom: clamp(0.5rem, 2vh, 2rem); 
+    .left-panel {
+        padding-bottom: clamp(0.5rem, 2vh, 2rem);
     }
-    .right-panel { 
-        padding-top: clamp(0.5rem, 2vh, 2rem); 
+    .right-panel {
+        padding-top: clamp(0.5rem, 2vh, 2rem);
     }
     .logo-section img {
         width: clamp(14rem, 60vw, 18rem);
@@ -206,11 +240,11 @@ body.light-mode .links-section a { background-color: #e5e7eb; color: #1f2937; }
 </head>
 <body>
 
-    <button id="theme-toggle" title="Toggle theme">
-        <i class="fa-regular fa-sun"></i>
-        <i class="fa-solid fa-sun"></i>
-        <i class="fa-regular fa-moon"></i>
-        <i class="fa-solid fa-moon"></i>
+    <button id="theme-toggle" title="Toggle theme" aria-label="Toggle light and dark theme">
+        <i class="fa-regular fa-sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-sun" aria-hidden="true"></i>
+        <i class="fa-regular fa-moon" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon" aria-hidden="true"></i>
     </button>
 
 <div class="page">
@@ -225,28 +259,28 @@ body.light-mode .links-section a { background-color: #e5e7eb; color: #1f2937; }
             <div class="bio-section">
                 <p class="bio-intro">this is noxleva</p>
                 <div class="bio-main">
-                    <p>A spark for game design that began with <em>'A Theory of Fun'</em> and evolved into a continuous love and hate relationship, a nightly battle with Unreal Engine.</p>
-                    <p>Now, I am turning Noxleva into a real studio. I invite you to follow the process, witnessing every success and failure along the way.</p>
-                    <p>A small piece of this journey, a living project that I return to when I need to breathe will be available soon on itch.io for free.</p>
+                    <p>a spark for game design that grew from a stack of books into a continuous love and hate relationship, a nightly battle with game engines.</p>
+                    <p>now, I am turning noxleva into a real studio. I invite you to follow the process, every success and failure along the way.</p>
+                    <p>night cast, a small piece of this journey and a living project that I return to when I need to breathe, will be available soon on itch.io for free.</p>
                 </div>
                 <p class="bio-outro">welcome to the journey</p>
             </div>
             <div class="links-section">
-                <a href="https://noxlevastudios.itch.io" target="_blank"><i class="fa-brands fa-itch-io"></i> Play on Itch.io</a>
-                <a href="https://www.reddit.com/user/noxlevastudios" target="_blank"><i class="fa-brands fa-reddit-alien"></i>Follow on Reddit</a>
-                <a href="https://x.com/noxlevastudios" target="_blank"><i class="fa-brands fa-x-twitter"></i>Follow on X</a>
-                <a href="https://instagram.com/noxlevastudios" target="_blank"><i class="fa-brands fa-instagram"></i>Follow on Instagram</a>
-                <a href="https://www.threads.com/@noxlevastudios" target="_blank"><i class="fa-brands fa-threads"></i>Follow on Threads</a>
-                <a href="mailto:hello@noxleva.studio"><i class="fa-solid fa-envelope"></i>hello@noxleva.studio</a>
+                <a href="https://noxlevastudios.itch.io" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-itch-io" aria-hidden="true"></i>play on itch.io</a>
+                <a href="https://www.reddit.com/user/noxlevastudios" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-reddit-alien" aria-hidden="true"></i>follow on reddit</a>
+                <a href="https://x.com/noxlevastudios" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i>follow on x</a>
+                <a href="https://instagram.com/noxlevastudios" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i>follow on instagram</a>
+                <a href="https://www.threads.com/@noxlevastudios" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-threads" aria-hidden="true"></i>follow on threads</a>
+                <a href="mailto:hello@noxleva.studio"><i class="fa-solid fa-envelope" aria-hidden="true"></i>hello@noxleva.studio</a>
             </div>
-            <footer>© 2026 Noxleva Studios</footer>
+            <footer>© 2026 noxleva studios</footer>
         </div>
     </div>
 </div>
 
 <script>
 const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
+const root = document.documentElement;
 const logoImage = document.getElementById('logo-image');
 const metaThemeColor = document.querySelector('meta[name="theme-color"]');
 const logoDark = 'NoxlevaLogoWebDark.png';
@@ -254,23 +288,28 @@ const logoLight = 'NoxlevaLogoWebLight.png';
 
 function setTheme(theme) {
     if (theme === 'light') {
-        body.classList.add('light-mode');
+        root.classList.add('light-mode');
         logoImage.src = logoLight;
         metaThemeColor.setAttribute('content', '#ffffff');
     } else {
-        body.classList.remove('light-mode');
+        root.classList.remove('light-mode');
         logoImage.src = logoDark;
         metaThemeColor.setAttribute('content', '#000000');
     }
-    localStorage.setItem('theme', theme);
+    try { localStorage.setItem('theme', theme); } catch (e) { /* storage blocked */ }
 }
 
 themeToggle.addEventListener('click', () => {
-    const isLight = body.classList.contains('light-mode');
+    const isLight = root.classList.contains('light-mode');
     setTheme(isLight ? 'dark' : 'light');
 });
 
-const savedTheme = localStorage.getItem('theme') || 'dark';
+// The head script already sets the theme class pre-paint (dark by default,
+// light only if the user chose it before). Sync the logo + meta color on load.
+let savedTheme = 'dark';
+try {
+    if (localStorage.getItem('theme') === 'light') savedTheme = 'light';
+} catch (e) { /* storage blocked; default dark */ }
 setTheme(savedTheme);
 </script>
 
